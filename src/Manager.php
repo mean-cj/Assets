@@ -307,13 +307,19 @@ class Manager
 	 * @param  array|Closure $attributes
 	 * @return string
 	 */
+	public function cssfile($group='default')
+	{
+		if( ! isset($this->css[$group]) )
+			return '';
+
+		return ($this->pipeline) ? (array)$this->cssPipeline($group) : $this->css[$group];
+	}
 	public function css($attributes = null, $group='default')
 	{
 		if( ! isset($this->css[$group]) )
 			return '';
 
 		$assets = ($this->pipeline) ? (array)$this->cssPipeline($group) : $this->css[$group];
-		if( $assets === false ) return $assets;
 
 		if($attributes instanceof Closure)
 			return $attributes->__invoke($assets);
@@ -348,6 +354,13 @@ class Manager
 	 * @param  array|Closure $attributes
 	 * @return string
 	 */
+	public function jsfile($group='default')
+	{
+		if( ! isset($this->js[$group]) )
+			return '';
+		return ($this->pipeline) ? (array)$this->jsPipeline($group) : $this->js[$group];
+	}
+
 	public function js($attributes = null, $group='default')
 	{
 
@@ -355,7 +368,6 @@ class Manager
 			return '';
 
 		$assets = ($this->pipeline) ? (array)$this->jsPipeline($group) : $this->js[$group];
-		if( $assets === false ) return $assets;
 
 		if($attributes instanceof Closure)
 			return $attributes->__invoke($assets);
