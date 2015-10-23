@@ -313,6 +313,7 @@ class Manager
 			return '';
 
 		$assets = ($this->pipeline) ? (array)$this->cssPipeline($group) : $this->css[$group];
+		if( $assets === false ) return $assets;
 
 		if($attributes instanceof Closure)
 			return $attributes->__invoke($assets);
@@ -354,6 +355,7 @@ class Manager
 			return '';
 
 		$assets = ($this->pipeline) ? (array)$this->jsPipeline($group) : $this->js[$group];
+		if( $assets === false ) return $assets;
 
 		if($attributes instanceof Closure)
 			return $attributes->__invoke($assets);
