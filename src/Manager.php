@@ -252,6 +252,11 @@ class Manager
 	 */
 	public function addCss($asset, $group='default')
 	{
+
+		if( ! isset($this->css[$group]) )
+		{
+			$this->css[$group] = array();
+		}
 		if(is_array($asset))
 		{
 			foreach($asset as $a)
@@ -260,10 +265,11 @@ class Manager
 			return $this;
 		}
 
+
 		if( ! $this->isRemoteLink($asset))
 			$asset = $this->buildLocalLink($asset, $this->css_dir);
 
-		if( ! in_array($asset, $this->css))
+		if( ! in_array($asset, $this->css[$group]))
 			$this->css[$group][] = $asset;
 
 		return $this;
@@ -280,6 +286,12 @@ class Manager
 	 */
 	public function addJs($asset,$group='default')
 	{
+
+		if( ! isset($this->js[$group]) )
+		{
+			$this->js[$group] = array();
+		}
+
 		if(is_array($asset))
 		{
 			foreach($asset as $a)
@@ -291,7 +303,7 @@ class Manager
 		if( ! $this->isRemoteLink($asset))
 			$asset = $this->buildLocalLink($asset, $this->js_dir);
 
-		if( ! in_array($asset, $this->js))
+		if( ! in_array($asset, $this->js[$group]))
 			$this->js[$group][] = $asset;
 
 		return $this;
